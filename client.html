@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Title of the document</title>
+</head>
+
+<body>
+    <div>URL : 
+        <input type="text" id="url">
+    </div>
+    <div>Type : 
+        <select id="type">
+            <option value="TXT">TXT</option>
+            <option value="HTML">HTML</option>
+        </select>
+    </div>
+    <div>출력묶음단위(자연수) 
+        <input type="number" id="numberOfPacking">
+    </div>
+    <button id="button">출력</button>
+    <div>몫 : 
+        <span id="quotient"></span>
+    </div>
+    <div>나머지 : 
+        <span id="reminder"></span>
+    </div>
+</body>
+
+</html>
+
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $.ajax({
+            url: "http://localhost:8080/crawling?url=%s&type=%s&numberOfPacking=%s", 
+            data: {url: $("#url").val(), type: $("#type option:selected").val(), numberOfPacking: $("#numberOfPacking").val()},
+            success: function(result) {
+                $("#quotient").text(result.quotient);
+                $("#reminder").text(result.reminder);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
+</script>
